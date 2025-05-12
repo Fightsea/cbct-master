@@ -1,0 +1,33 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": [
+    ".env",
+    ".env.local",
+    "tsconfig.json"
+  ],
+  "globalEnv": [
+    "VERSION",
+    "NODE_ENV",
+    "CLIENT_ORIGIN",
+    "SERVER_ORIGIN",
+    "SERVER_PORT",
+    "ASSET_PROVIDER_DOMAIN"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "start": {
+      "dependsOn": ["^build"],
+      "inputs": [".env", ".env.*"],
+      "cache": false
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "inputs": [".env", ".env.*"],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "extends": "@cbct/tsconfig/base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*.d.ts"]
+}

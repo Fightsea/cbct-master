@@ -1,0 +1,5 @@
+export enum TreatmentStatus {
+  IN_TREATMENT = 'IN_TREATMENT',
+  ACTION_REQUIRED = 'ACTION_REQUIRED',
+  ARCHIVED = 'ARCHIVED'
+}

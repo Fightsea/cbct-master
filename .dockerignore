@@ -1,0 +1,15 @@
+**/node_modules
+**/dist
+**/logs
+**/.turbo
+**/*.tsbuildinfo
+**/.env*
+**/Dockerfile
+**/.gitignore
+**/README.md
+.dockerignore
+.git
+**/next-env.d.ts
+**/.next
+**/dist
+**/uploads

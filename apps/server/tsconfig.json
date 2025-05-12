@@ -1,0 +1,18 @@
+{
+  "extends": "@cbct/tsconfig/server.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": "src",
+    "tsBuildInfoFile": ".tsbuildinfo",
+    "typeRoots": [
+      "src/@types/**/*.d.ts",
+      "node_modules/@types"
+    ],
+    "paths": {
+      "@/*": ["*"]
+    }
+  },
+  "exclude": ["node_modules"],
+  "include": ["src/**/*.ts", "knexfile.ts"]
+}

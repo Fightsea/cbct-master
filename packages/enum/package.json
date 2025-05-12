@@ -1,0 +1,12 @@
+{
+  "name": "@cbct/enum",
+  "version": "0.0.0",
+  "private": true,
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@cbct/tsconfig": "workspace:*"
+  }
+}
