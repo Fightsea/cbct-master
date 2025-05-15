@@ -20,6 +20,7 @@ import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded'
 import Pagination from '@mui/material/Pagination'
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded'
 import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
+import { highlightText } from '@/utils/searching'
 
 export type PatientTableHandle = {
   mutate: () => void
@@ -194,7 +195,7 @@ const PatientTable = forwardRef<PatientTableHandle, PatientTableProps>(({ status
               fontSize: '14px',
               fontStyle: 'normal',
               fontWeight: 700
-            }}>{params.row.name}</Typography>
+            }}>{highlightText(params.row.name, searchValue)}</Typography>
             <PatientStatusChip status={params.row.treatmentStatus} sx={{ mt: 'auto' }} />
           </Box>
         </Box>
@@ -232,7 +233,7 @@ const PatientTable = forwardRef<PatientTableHandle, PatientTableProps>(({ status
             {params.row.tags.map((tag) => (
               <TagChip
                 key={tag.id}
-                label={tag.name}
+                label={highlightText(tag.name, searchValue)}
                 color={tag.color}
               />
             ))}
@@ -259,7 +260,7 @@ const PatientTable = forwardRef<PatientTableHandle, PatientTableProps>(({ status
               WebkitLineClamp: 4,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden'
-            }}>{params.row.note}
+            }}>{highlightText(params.row.note, searchValue)}
           </Typography>
         </Box>
       )

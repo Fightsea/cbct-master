@@ -19,6 +19,7 @@ import FormSearchInput from '@/components/forms/FormSearchInput'
 import FilterIcon from '@/components/icons/FilterIcon'
 import dynamic from 'next/dynamic'
 import { convertToProxyUrl } from '@/utils/proxy'
+import { highlightText } from '@/utils/searching'
 
 const DicomViewer = dynamic(() => import('@/components/images/DCMViewer'), { ssr: false })
 
@@ -149,7 +150,7 @@ const History = () => {
                   </Typography>
                 </Box>
                 <Box sx={{ marginTop: 1.5, display: 'flex', alignItems: 'start', gap: 1.5}}>
-                  <ExpandableText text={history.description} onClick={handlerUpdate} />
+                  <ExpandableText text={highlightText(history.description, searchSubmit)} onClick={handlerUpdate} />
                   {
                     history.images && history.images.length > 0 && (
                       <AvatarGroup
@@ -220,7 +221,7 @@ const History = () => {
                   pt: 1
                 }}>
                   {history.tags.map((tag, index) => (
-                    <TagChip key={index} label={tag.name} color={tag.color} />
+                    <TagChip key={index} label={highlightText(tag.name, searchSubmit)} color={tag.color} />
                   ))}
                 </Box>
               </Box>

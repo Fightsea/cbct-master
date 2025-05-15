@@ -28,6 +28,7 @@
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
     "dicom-parser": "^1.8.21",
+    "html-react-parser": "^5.2.5",
     "itk-wasm": "1.0.0-b.188",
     "mui-color-input": "^5.0.1",
     "next": "15.0.0",
