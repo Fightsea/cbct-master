@@ -1,19 +1,15 @@
-import { Autocomplete, IconButton, InputAdornment, SxProps, TextField, styled } from '@mui/material'
+import { IconButton, InputAdornment, SxProps, TextField, styled } from '@mui/material'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
 
 type Props = {
-  options: string[]
   value: string | null
-  onChange: (value: string | null) => void
+  onChange: (value: string) => void
   placeholder?: string
   sx?: SxProps
+  onSubmit?: (event: React.ChangeEvent<{}>) => void
 }
 
-const StyledAutocomplete = styled(Autocomplete)<{
-  freeSolo?: boolean;
-  options: string[];
-  value: string | null;
-}>({
+const StyledTextField = styled(TextField)({
   width: '100%',
   maxWidth: '360px',
   '& .MuiOutlinedInput-root': {
@@ -27,14 +23,6 @@ const StyledAutocomplete = styled(Autocomplete)<{
   }
 })
 
-const StyledTextField = styled(TextField)({
-  width: '100%',
-  '& .MuiOutlinedInput-root': {
-    backgroundColor: '#F5F5F5',
-    padding: '0px 16px'
-  }
-})
-
 const StyledIconButton = styled(IconButton)({
   color: '#656565',
   '&:hover': {
@@ -42,35 +30,27 @@ const StyledIconButton = styled(IconButton)({
   }
 })
 
-const FormSearchInput = ({ options, value, onChange, placeholder = 'Search...', sx }: Props) => {
+const FormSearchInput = ({ value, onChange, placeholder = 'Search', sx, onSubmit }: Props) => {
   return (
-    <StyledAutocomplete
+    <StyledTextField
+      size='small'
+      autoComplete='off'
       value={value}
-      onChange={(_, newValue) => onChange(newValue as string | null)}
-      options={options}
-      freeSolo
-      disableClearable
+      placeholder={placeholder}
       sx={sx}
-      renderInput={(params) => (
-        <StyledTextField
-          {...params}
-          placeholder={placeholder}
-          slotProps={{
-            input: {
-              sx: { padding: '0px' },
-              ...params,
-              endAdornment: (
-                <InputAdornment position={'end'}>
-                  <StyledIconButton size={'small'}>
-                    <SearchRoundedIcon />
-                  </StyledIconButton>
-                  {params.InputProps.endAdornment}
-                </InputAdornment>
-              )
-            }
-          }}
-        />
-      )}
+      onChange={e => onChange(e.target.value)}
+      slotProps={{
+        input: {
+          sx: { padding: '0px' },
+          endAdornment: (
+            <InputAdornment position={'end'}>
+              <StyledIconButton size={'small'} onClick={onSubmit}>
+                <SearchRoundedIcon />
+              </StyledIconButton>
+            </InputAdornment>
+          )
+        }
+      }}
     />
   )
 }

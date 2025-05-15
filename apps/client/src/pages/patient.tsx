@@ -96,8 +96,7 @@ const PatientPage = () => {
   const actionRequiredTableRef = useRef<PatientTableHandle>(null)
   const archivedTableRef = useRef<PatientTableHandle>(null)
   const { setHandleMutateAllTables } = useStore(patientPageStore)
-  const [searchValue, setSearchValue] = useState<string | null>(null)
-  const searchOptions = ['Option 1', 'Option 2', 'Option 3']
+  const [searchValue, setSearchValue] = useState<string>('')
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue)
@@ -122,10 +121,8 @@ const PatientPage = () => {
           ))}
         </Tabs>
         <FormSearchInput
-          options={searchOptions}
           value={searchValue}
           onChange={setSearchValue}
-          placeholder={'Search'}
         />
       </Box>
       <Box sx={{ width: '100%', height: 'calc(100% - 48px - 60px)', px: 3, pb: 1.5 }}>

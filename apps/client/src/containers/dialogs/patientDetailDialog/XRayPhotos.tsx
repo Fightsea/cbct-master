@@ -161,10 +161,8 @@ const XRayPhotos = ({
             <CalendarIcon />
           </IconButton>
           <FormSearchInput
-            options={[]}
             value={''}
             onChange={() => {}}
-            placeholder={'Search'}
           />
         </Box>
       }

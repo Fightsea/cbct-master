@@ -224,10 +224,8 @@ const PatientPhotoBox = ({
                         <CalendarIcon />
                       </IconButton>
                       <FormSearchInput
-                        options={[]}
                         value={''}
                         onChange={() => {}}
-                        placeholder={'Search'}
                       />
                     </Box>
                   }

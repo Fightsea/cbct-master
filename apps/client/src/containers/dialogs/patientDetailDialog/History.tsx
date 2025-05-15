@@ -103,7 +103,6 @@ const History = () => {
           Filter
         </Button>
         <FormSearchInput
-          options={[]}
           value={''}
           onChange={() => {}}
         />
