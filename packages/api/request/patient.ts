@@ -16,6 +16,10 @@ export const searchWithPagingQuerySchema = searchQuerySchema(
 
 export type SearchWithPagingRequest = z.infer<typeof searchWithPagingQuerySchema>;
 
+export const searchHistoryQuerySchema = z.object({ search: z.string().optional() }).strict()
+
+export type SearchHistoryRequest = z.infer<typeof searchHistoryQuerySchema>
+
 export const createRequestBodySchema = z.object({
   serialNumber: z.string().regex(/^\d{8}$/),
   email: z

@@ -2,6 +2,7 @@ import ApiService from '@/apis/apiService'
 import {
   CreateRequest,
   SearchWithPagingRequest,
+  SearchHistoryRequest,
   SwitchStatusRequest,
   UpdatePinnedRequest,
   UpdateRequest
@@ -31,8 +32,8 @@ const patientApi = {
   getAvatar: (id: string) => {
     return patientService.get<null, GetAvatarResponse>(`patients/${id}/avatar`)
   },
-  getHistory: (id: string) => {
-    return patientService.get<null, GetHistoryResponse>(`patients/${id}/history`)
+  getHistory: (id: string, params: SearchHistoryRequest) => {
+    return patientService.get<SearchHistoryRequest, GetHistoryResponse>(`patients/${id}/history`, params)
   },
   getOSARisk: (id: string) => {
     return patientService.get<null, GetOsaRiskResponse>(`patients/${id}/osa-risk`)

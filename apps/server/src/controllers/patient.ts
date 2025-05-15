@@ -5,6 +5,7 @@ import { success } from '@/utils/response';
 import { NotFoundError } from '@/utils/error';
 import type {
   SearchWithPagingRequest,
+  SearchHistoryRequest,
   CreateRequest,
   UpdateRequest,
   SwitchStatusRequest,
@@ -89,10 +90,9 @@ export const searchWithPaging = async (
       .where('clinicId', clinicId)
       .where('treatmentStatus', treatmentStatus)
       .where(qb => qb
-        .whereILike('serialNumber', like)
-        .orWhereILike('firstName', like)
-        .orWhereILike('lastName', like)
+        .orWhereILike(fn.concat(ref('firstName'), raw("' '"), ref('lastName')), like)
         .orWhereILike('note', like)
+        .orWhereExists(Patient.relatedQuery('tags').whereILike('tags.name', like))
       )
       .select(
         'id',
@@ -299,17 +299,24 @@ export const getAvatar = async (
  *         description: "`INTERNAL_SERVER_ERROR`: Unexpected condition was encountered."
  */
 export const getHistory = async (
-  req: Request,
+  req: QueryRequest<SearchHistoryRequest>,
   res: DataResponse<GetHistoryResponse>,
   next: NextFunction
 ) => {
   try {
     const id = req.params.id;
+    const {search = ''} = req.query;
+
+    const like = `%${search}%`;
 
     const histories = await DiagnosisAnalysis.query(db)
       .withGraphFetched('tags')
       .modifyGraph('tags', qb => qb.select('name', 'color'))
       .where('patientId', id)
+      .where(qb => qb
+        .orWhereILike('description', like)
+        .orWhereExists(DiagnosisAnalysis.relatedQuery('tags').whereILike('tags.name', like))
+      )
       .orderBy('date', 'desc')
       .orderBy('createdAt', 'desc')
       .select('id', 'date', 'type', 'subject', 'description');

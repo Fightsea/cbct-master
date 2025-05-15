@@ -8,6 +8,8 @@ import CbctRecord from './cbctRecord';
 interface Patient extends Model.Patient {}
 
 class Patient extends softDelete(ObjModel) {
+  tags?: Tag[]
+  
   static tableName = 'patients';
 
   static jsonSchema = {

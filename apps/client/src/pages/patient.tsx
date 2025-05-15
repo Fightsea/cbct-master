@@ -108,6 +108,12 @@ const PatientPage = () => {
     archivedTableRef.current?.mutate()
   }
 
+  const handleSearchTables = () => {
+    inTreatmentTableRef.current?.setSearchValue(searchValue);
+    actionRequiredTableRef.current?.setSearchValue(searchValue);
+    archivedTableRef.current?.setSearchValue(searchValue);
+}
+
   useEffect(() => {
     setHandleMutateAllTables(handleMutateAllTables)
   }, [])
@@ -122,7 +128,8 @@ const PatientPage = () => {
         </Tabs>
         <FormSearchInput
           value={searchValue}
-          onChange={setSearchValue}
+          onChange={value => setSearchValue(value)}
+          onSubmit={handleSearchTables}
         />
       </Box>
       <Box sx={{ width: '100%', height: 'calc(100% - 48px - 60px)', px: 3, pb: 1.5 }}>

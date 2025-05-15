@@ -5,7 +5,7 @@ import { patientPageStore } from '@/stores/patientPageStore'
 import patientApi from '@/apis/patientApi'
 import cbctAiOutputApi from '@/apis/cbctAiOutputApi'
 import useSWR from 'swr'
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import CreateDiagnosisDialog from '../CreateDiagnosisDialog'
 import AiAnalysisDialog from '@/containers/dialogs/AiAnalysisDialog.tsx'
 import DiagnosisChip from '@/components/chips/DiagnosisChip'
@@ -25,9 +25,13 @@ const DicomViewer = dynamic(() => import('@/components/images/DCMViewer'), { ssr
 const History = () => {
   const scrollBarRef = useRef<ScrollBarHandle>(null)
   const { patientId, openCreateDiagnosisDialog, openAiAnalysisDialog } = useStore(patientPageStore)
+
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [searchSubmit, setSearchSubmit] = useState<string>('')
+
   const { data: histories, mutate } = useSWR(
-    patientId ? `/patients/${patientId}/history` : null,
-    async () => await patientApi.getHistory(patientId ?? '')
+    patientId ? `/patients/${patientId}/history/?search=${searchSubmit}` : null,
+    async () => await patientApi.getHistory(patientId ?? '', {search : searchSubmit})
   )
 
   const { data: historyImages } = useSWR(
@@ -103,8 +107,9 @@ const History = () => {
           Filter
         </Button>
         <FormSearchInput
-          value={''}
-          onChange={() => {}}
+          value={searchValue}
+          onChange={value => setSearchValue(value)}
+          onSubmit={() => setSearchSubmit(searchValue)}
         />
       </Box>
       <Box sx={{ overflow: 'hidden', height: '100%', flex: 1, marginLeft: '-12px' }}>

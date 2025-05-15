@@ -23,6 +23,7 @@ import ArrowForwardRoundedIcon from '@mui/icons-material/ArrowForwardRounded'
 
 export type PatientTableHandle = {
   mutate: () => void
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 type PatientTableProps = {
@@ -106,17 +107,19 @@ const PatientTable = forwardRef<PatientTableHandle, PatientTableProps>(({ status
     { field: 'createdAt', sort: 'desc' }
   ])
   const [rowCount, setRowCount] = useState(0)
+  const [searchValue, setSearchValue] = useState<string>('')
+
   const { openPatientDetailDialog } = useStore(patientPageStore)
 
   const { data, isLoading, mutate } = useSWR<SearchWithPagingResponse['results']>(
-    `${clinicId}/patient/search?treatmentStatus=${status}&page=${paginationModel.page + 1}&size=${paginationModel.pageSize}&order=${sortModel[0]?.field}&sort=${sortModel[0]?.sort || 'asc'}&search=`,
+    `${clinicId}/patient/search?treatmentStatus=${status}&page=${paginationModel.page + 1}&size=${paginationModel.pageSize}&order=${sortModel[0]?.field}&sort=${sortModel[0]?.sort || 'asc'}&search=${searchValue}`,
     async () => patientApi.search({
       treatmentStatus: status,
       page: paginationModel.page + 1,
       size: paginationModel.pageSize,
       order: sortModel[0]?.field,
       sort: sortModel[0]?.sort || 'asc',
-      search: ''
+      search: searchValue
     })
       .then(data => {
         setRowCount(data.total)
@@ -137,7 +140,8 @@ const PatientTable = forwardRef<PatientTableHandle, PatientTableProps>(({ status
   }
 
   useImperativeHandle(ref, () => ({
-    mutate
+    mutate,
+    setSearchValue
   }))
 
   const columns: GridColDef<SearchWithPagingResponse['results'][number]>[] = [
